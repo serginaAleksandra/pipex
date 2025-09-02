@@ -6,7 +6,7 @@
 /*   By: asergina <asergina@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 16:15:04 by asergina          #+#    #+#             */
-/*   Updated: 2025/08/29 18:51:58 by asergina         ###   ########.fr       */
+/*   Updated: 2025/09/02 16:57:45 by asergina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,66 +19,96 @@
 char	*parsing(char *cmd, char **envp)
 {
 	int	i;
-	char	**envp_pathes;
+	char	**envp_path;
 	char	*path;
 	char	*cmd_path;
 
 	i = 0;
 	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
-	{
 		i++;
-	}
-	envp_pathes = ft_split(envp[i] + 5, ':');
-	if (!envp_pathes)
+	envp_path = ft_split(envp[i] + 5, ':');
+	if (!envp_path)
 		return (NULL);
 	i = 0;
-	while(envp_pathes[i])
+	while(envp_path[i])
 	{
-		path = ft_strjoin(envp_pathes[i], "/");
+		path = ft_strjoin(envp_path[i], "/");
 		cmd_path = ft_strjoin(path, cmd);
 		if (!cmd_path)
-			return (NULL);		
+			return (free(path), NULL);		
 		free(path);
 		if (access(cmd_path, X_OK) == 0)
 			return (cmd_path);
 		free(cmd_path);
 		i++;
 	}
+	// free envp_path ?
 	return (NULL); //wrong command from argv
 }
 
 void	execute(char *cmd, char **envp)
 {
 	char	*cmd_path;
-	char	**cmd_argv;
+	char	**cmd_arg;
 
-	cmd_argv = ft_split(cmd, ' ');
-	if (!cmd_argv)
+	cmd_arg = ft_split(cmd, ' ');
+	if (!cmd_arg)
 		return ;
-	cmd_path = parsing(cmd_argv[0], envp);
+	cmd_path = parsing(cmd_arg[0], envp);
 	if (!cmd_path)
 	{
 		perror("command not found");
 		exit(127);
 	}
-	execve(cmd_path, cmd_argv, envp);
+	if (execve(cmd_path, cmd_arg, envp) == -1)
+		return ;
+	// free cmd_arg and cmd_path 
 }
-/*
+
+int	spaces_check(char *cmd)
+{
+	int	i;
+
+	if (!cmd)
+		return (0);
+	i = 0;
+	while (cmd[i])
+	{
+		if (cmd[i] != ' ' && cmd[i] != '\t')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+void	child_process(int infile, char *cmd, char **envp)
+{
+	if (dup2(infile, stdin) == -1)
+		return ;
+	if (dup2(fd[1], stdout) == -1)
+		return ;
+	close(fd[0]);
+	close(infile);
+	execute(cmd, envp);
+}
+
 void	pipex()
 {
 	int	fd[2];
-	pid_t	pid;
+	pid_t	process_id;
 
 	if (pipe(fd) == -1)
-		return ;
-	pid = fork();
-	if (pid == -1)
+		return (perror("Fork: "));
+	process_id = fork();
+	if (process_id == -1)
 		return;
-	if (pid == 0)
-		//child process
+	if (process_id == 0)
+		child_process(infile, cmd1, envp);
 	else
 		//parent process
-}*/
+}
+
+
 
 int	main(int argc, char *argv[], char **envp)
 {
@@ -87,11 +117,13 @@ int	main(int argc, char *argv[], char **envp)
 		int infile = open(argv[1], O_RDONLY);
 		int outfile = open(argv[4], O_CREAT | O_RDWR | O_TRUNC, 0644 );
 		if (infile < 0 || outfile < 0)
-			return (-1);
+			return (perror("File: "), -1);
+		if (!spaces_check(argv[2]) || !spaces_check(argv[3]))
+			return (write(1, "Error\n", 6), -1);	
 		execute(argv[2], envp);		
 		printf ("finish");
 	}
 	else 
-		return (write(1, "Error\n", 6));
+		return (write(1, "Error\n", 6), -1);
 	return (0);
 }

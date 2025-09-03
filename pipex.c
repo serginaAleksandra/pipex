@@ -6,7 +6,7 @@
 /*   By: asergina <asergina@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 16:15:04 by asergina          #+#    #+#             */
-/*   Updated: 2025/09/02 16:57:45 by asergina         ###   ########.fr       */
+/*   Updated: 2025/09/03 20:06:54 by asergina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,18 +81,30 @@ int	spaces_check(char *cmd)
 	return (0);
 }
 
-void	child_process(int infile, char *cmd, char **envp)
+void	child_process(int infile, char *cmd, int *fd, char **envp)
 {
-	if (dup2(infile, stdin) == -1)
+	if (dup2(infile, 0) == -1)
 		return ;
-	if (dup2(fd[1], stdout) == -1)
+	if (dup2(fd[1], 1) == -1)
 		return ;
 	close(fd[0]);
 	close(infile);
 	execute(cmd, envp);
 }
 
-void	pipex()
+void parent_process(int outfile, char *cmd, int *fd, char **envp)
+{
+	if (dup2(outfile, 1) == -1)
+		return;
+
+	if (dup2(fd[0], 0) == -1)
+		return ;
+	close(fd[1]);
+	close(outfile);
+	execute(cmd, envp);
+}
+
+void	pipex(int infile, int outfile, char *cmd1, char *cmd2, char **envp)
 {
 	int	fd[2];
 	pid_t	process_id;
@@ -103,12 +115,13 @@ void	pipex()
 	if (process_id == -1)
 		return;
 	if (process_id == 0)
-		child_process(infile, cmd1, envp);
+		child_process(infile, cmd1, fd, envp);
 	else
-		//parent process
+	{
+		// wait
+		parent_process(outfile, cmd2, fd, envp);
+	}
 }
-
-
 
 int	main(int argc, char *argv[], char **envp)
 {
@@ -119,8 +132,9 @@ int	main(int argc, char *argv[], char **envp)
 		if (infile < 0 || outfile < 0)
 			return (perror("File: "), -1);
 		if (!spaces_check(argv[2]) || !spaces_check(argv[3]))
-			return (write(1, "Error\n", 6), -1);	
-		execute(argv[2], envp);		
+			return (write(1, "Error\n", 6), -1);
+		pipex(infile, outfile, argv[2], argv[3], envp);
+		//execute(argv[2], envp);		
 		printf ("finish");
 	}
 	else 

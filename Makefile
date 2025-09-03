@@ -1,4 +1,4 @@
-NAME = pipex.a
+NAME = pipex
 
 SRC = pipex.c
 OBJ = $(SRC:.c=.o)

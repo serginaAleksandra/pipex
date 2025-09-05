@@ -99,7 +99,7 @@ void	execute(char *cmd, char **envp)
 	if (!cmd_path)
 	{
 		free_matrix(cmd_arg);
-		exit_with_error("command not found", 1);
+		exit_with_error("command not found", 127);
 	}
 	if (execve(cmd_path, cmd_arg, envp) == -1)
 	{

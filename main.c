@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asergina <asergina@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,46 +10,40 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <unistd.h>
+#include "pipex.h"
+#include "libft.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include <sys/wait.h>
-#include "libft/libft.h"
+#include <errno.h>
 
-void	pipex(char **argv, char **envp)
+void	exit_with_error(const char *msg, int code)
 {
-	int 	infile;
-	int     outfile;
-	int	fd[2];
-	pid_t	pid1;
-
-	infile = open(argv[1], O_RDONLY);
-	if (infile == -1)
-		exit_with_error("open infile", 1); 
-	outfile = open(argv[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
-	if (outfile == -1)
-	{
-		close(infile);
-		exit_with_error("open outfile", 1);
-	}
-	if (pipe(fd) == -1)
-		exit_with_error("pipe", 1);
-	pid1 = fork();
-	if (pid1 == -1)
-		exit_with_error("fork", 1);
-	if (pid1 == 0)
-		child_cmd1(infile, argv[2], fd, envp, outfile);
+	if (errno)
+		perror(msg);
 	else
-		p_p(infile, outfile, argv[3], pid1, fd, envp);
+		ft_printf("Error: %s\n", msg);
+	exit(code);
 }
 
-int	main(int argc, char **argv, char **envp)
+int		spaces_check(char *cmd)
+{
+	if (!*cmd)
+		return (0);
+	while (*cmd)
+	{
+		if (*cmd != ' ' && *cmd != '\t')
+			return (1);
+		cmd++;
+	}
+	return (0);
+}
+
+int		main(int argc, char **argv, char **envp)
 {
 	if (argc == 5)
 	{
 		if (!spaces_check(argv[2]) || !spaces_check(argv[3]))
-			exit_with_error("command is empty", 0);
+			exit_with_error("command is empty", 1);
 		pipex(argv, envp);
 	}
 	else

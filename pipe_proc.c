@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_proc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asergina <asergina@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 16:15:04 by asergina          #+#    #+#             */
-/*   Updated: 2025/11/16 22:42:44 by asergina         ###   ########.fr       */
+/*   Updated: 2025/11/17 08:02:58 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	pipex(char **argv, char **envp)
 
 	fds.infile = open(argv[1], O_RDONLY);
 	if (fds.infile == -1)
-		exit_with_error("open outfile");
+		exit_with_error("open infile");
 		//exit_with_error("open outfile", 1); 
 	fds.outfile = open(argv[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fds.outfile == -1)

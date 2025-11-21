@@ -1,7 +1,8 @@
 NAME = pipex
 
 SRCS = main.c pipe_proc.c execution.c
-OBJS = $(SRCS:.c=.o)
+OBJS = main.o pipe_proc.o execution.o
+HEADER = pipex.h
 
 LIBFT_DIR = libft_printf
 LIBFT = $(LIBFT_DIR)/libft.a
@@ -12,7 +13,7 @@ RM = rm -f
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT)
+$(NAME): $(OBJS) $(LIBFT) $(HEADER)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
 $(LIBFT):

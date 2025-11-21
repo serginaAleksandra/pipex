@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asergina <asergina@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 15:24:09 by asergina          #+#    #+#             */
-/*   Updated: 2025/11/16 22:45:06 by asergina         ###   ########.fr       */
+/*   Updated: 2025/11/21 20:10:37 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,14 @@ void	execute(char *cmd, char **envp)
 	cmd_path = parsing(cmd_arg[0], envp);
 	if (!cmd_path)
 	{
+		// free_matrix(cmd_arg);
+		// // exit_with_error("command not found", 127);
+		// exit_with_error("command not found");
+		ft_putstr_fd("pipex: command not found: ", 2);
+		ft_putendl_fd(cmd_arg[0], 2);
 		free_matrix(cmd_arg);
-		// exit_with_error("command not found", 127);
-		exit_with_error("command not found");
-	}
+		exit(127);
+}
 	if (execve(cmd_path, cmd_arg, envp) == -1)
 	{
 		free_matrix(cmd_arg);

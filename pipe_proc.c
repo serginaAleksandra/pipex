@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_proc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
+/*   By: asergina <asergina@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 16:15:04 by asergina          #+#    #+#             */
-/*   Updated: 2025/11/21 21:24:45 by aleksandra       ###   ########.fr       */
+/*   Updated: 2025/11/21 21:36:21 by asergina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,5 @@ int	pipex(char **argv, char **envp)
 		exit_with_error("fork", EXIT_FAILURE);
 	if (pid1 == 0)
 		child_cmd1(&fds, argv[2], envp);
-	return (parent_process(&fds, argv[3],pid1, envp));
+	return (parent_process(&fds, argv[3], pid1, envp));
 }

@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 16:15:04 by asergina          #+#    #+#             */
-/*   Updated: 2025/11/21 20:26:43 by aleksandra       ###   ########.fr       */
+/*   Updated: 2025/11/21 20:29:00 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ typedef struct s_fd
 
 int		pipex(char **argv, char **envp);
 void	execute(char *cmd, char **envp);
-void	exit_with_error(const char *msg);
+void	exit_with_error(const char *msg, int code);
 
 #endif

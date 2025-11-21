@@ -6,7 +6,7 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 15:24:09 by asergina          #+#    #+#             */
-/*   Updated: 2025/11/21 20:10:37 by aleksandra       ###   ########.fr       */
+/*   Updated: 2025/11/21 21:08:53 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ static char	*find_path_env(char **envp)
 			return (envp[i] + 5);
 		i++;
 	}
-	// exit_with_error("inappropriate environment", 1);
-	exit_with_error("inappropriate environment");
+	exit_with_error("inappropriate environment", EXIT_FAILURE);
 	return (NULL);
 }
 
@@ -86,26 +85,19 @@ void	execute(char *cmd, char **envp)
 
 	cmd_arg = ft_split(cmd, ' ');
 	if (!cmd_arg)
-	{
-		// exit_with_error("malloc (cmd_arg)", 1);
-		exit_with_error("malloc (cmd_arg)");
-	}
+		exit_with_error("malloc (cmd_arg)", EXIT_FAILURE);
 	cmd_path = parsing(cmd_arg[0], envp);
 	if (!cmd_path)
 	{
-		// free_matrix(cmd_arg);
-		// // exit_with_error("command not found", 127);
-		// exit_with_error("command not found");
 		ft_putstr_fd("pipex: command not found: ", 2);
 		ft_putendl_fd(cmd_arg[0], 2);
 		free_matrix(cmd_arg);
 		exit(127);
-}
+	}
 	if (execve(cmd_path, cmd_arg, envp) == -1)
 	{
 		free_matrix(cmd_arg);
 		free(cmd_path);
-		exit_with_error("execve");
-		// exit_with_error("execve", 1);
+		exit_with_error("execve", EXIT_FAILURE);
 	}
 }

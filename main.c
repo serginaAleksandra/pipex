@@ -6,22 +6,13 @@
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 16:15:04 by asergina          #+#    #+#             */
-/*   Updated: 2025/11/21 20:26:37 by aleksandra       ###   ########.fr       */
+/*   Updated: 2025/11/21 20:29:48 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 #include "libft.h"
 #include <errno.h>
-
-void	exit_with_error(const char *msg)
-{
-	if (errno)
-		perror(msg);
-	else
-		ft_printf("Error: %s\n", msg);
-	exit(EXIT_FAILURE);
-}
 
 void	exit_with_error(const char *msg, int code)
 {
@@ -50,12 +41,10 @@ int	main(int argc, char **argv, char **envp)
 	if (argc == 5)
 	{
 		if (!spaces_check(argv[2]) || !spaces_check(argv[3]))
-			exit_with_error("command is empty");
-			//exit_with_error("command is empty", 1);
+			exit_with_error("command is empty", 1);
 		return (pipex(argv, envp));
 	}
 	else
-		exit_with_error("wrong number of arguments");
-		//exit_with_error("wrong number of arguments", 2);
+		exit_with_error("wrong number of arguments", 2);
 	return (0);
 }

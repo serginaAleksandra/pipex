@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_proc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asergina <asergina@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 16:15:04 by asergina          #+#    #+#             */
-/*   Updated: 2025/11/21 21:36:21 by asergina         ###   ########.fr       */
+/*   Updated: 2025/11/22 23:44:06 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 #include <fcntl.h>
-#include <sys/wait.h>
 
 static void	child_cmd1(t_fd *fds, char *cmd, char **env)
 {

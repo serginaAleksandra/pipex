@@ -1,32 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 16:15:04 by asergina          #+#    #+#             */
-/*   Updated: 2025/11/22 23:42:55 by aleksandra       ###   ########.fr       */
+/*   Updated: 2025/11/23 01:12:24 by aleksandra       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef PIPEX_BONUS_H
+# define PIPEX_BONUS_H
 
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <sys/wait.h>
 
-typedef struct s_fd
+typedef struct s_pipeline
 {
-	int	infile;
-	int	outfile;
-	int	fd[2];
-}				t_fd;
+    int		cmd_count;
+    int		infile;
+    int		outfile;
+    int		prev_fd;
+    int		pipe_fd[2];
+    pid_t	*pids;
+}				t_pipeline;
 
-int		pipex(char **argv, char **envp);
+int		pipex(int argc, char **argv, char **envp);
 void	execute(char *cmd, char **envp);
 void	exit_with_error(const char *msg, int code);
+void	child_process(t_pipeline *pl, int idx, char **argv, char **envp);
+int		wait_children(t_pipeline *pl);
+void	close_if_valid(int fd);
 
 #endif

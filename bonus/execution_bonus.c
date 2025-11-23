@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
+/*   By: asergina <asergina@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/17 15:24:09 by asergina          #+#    #+#             */
-/*   Updated: 2025/11/22 23:47:37 by aleksandra       ###   ########.fr       */
+/*   Created: 2025/11/23 01:40:54 by asergina          #+#    #+#             */
+/*   Updated: 2025/11/23 01:42:01 by asergina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

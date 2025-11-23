@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
+/*   By: asergina <asergina@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/08 16:15:04 by asergina          #+#    #+#             */
-/*   Updated: 2025/11/23 00:36:49 by aleksandra       ###   ########.fr       */
+/*   Created: 2025/11/23 01:39:50 by asergina          #+#    #+#             */
+/*   Updated: 2025/11/23 01:43:54 by asergina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 void	close_if_valid(int fd)
 {
-    if (fd != -1)
-        close(fd);
+	if (fd != -1)
+		close(fd);
 }
 
 void	exit_with_error(const char *msg, int code)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleksandra <aleksandra@student.42.fr>      +#+  +:+       +#+        */
+/*   By: asergina <asergina@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/08 16:15:04 by asergina          #+#    #+#             */
-/*   Updated: 2025/11/23 01:12:24 by aleksandra       ###   ########.fr       */
+/*   Created: 2025/11/23 01:40:37 by asergina          #+#    #+#             */
+/*   Updated: 2025/11/23 01:43:03 by asergina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@
 
 typedef struct s_pipeline
 {
-    int		cmd_count;
-    int		infile;
-    int		outfile;
-    int		prev_fd;
-    int		pipe_fd[2];
-    pid_t	*pids;
+	int		cmd_count;
+	int		infile;
+	int		outfile;
+	int		prev_fd;
+	int		pipe_fd[2];
+	pid_t	*pids;
 }				t_pipeline;
 
 int		pipex(int argc, char **argv, char **envp);
